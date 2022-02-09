@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  # nginx:
+  #   container_name: nginx
+  #   restart: unless-stopped
+  #   build:
+  #     context: nginx
+  #     dockerfile: Dockerfile.production
+  #     args:
+  #       - CERTBOT_EMAIL=freelancebakar@gmail.com
+  #       - DOMAIN_LIST=your-domain,api.your-domain,www.your-domain
+
+  #   networks:
+  #     - web
+  #   volumes:
+  #     - ./nginx/config/config.d/prod:/etc/nginx/conf.d
+  #     - letsencrypt:/etc/letsencrypt
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+
+  dev_nginx:
+    container_name: nginx
+    restart: unless-stopped
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - web
+
+  client:
+    build:
+      context: .
+    container_name: portfolio
+    restart: unless-stopped
+    networks:
+      - web
+
+networks:
+  web:
+
+volumes:
+  letsencrypt:
